@@ -38,12 +38,14 @@ curl -sSL http://$(dig +short @10.96.0.10 $(dig +short  @10.96.0.10 \
 
 
 
-
+```
 [root@kmaster net.d]# kubectl get svc kube-dns --namespace=kube-system
 NAME       CLUSTER-IP   EXTERNAL-IP   PORT(S)         AGE
 kube-dns   10.96.0.10   <none>        53/UDP,53/TCP   5h
+```
 
 
+```
 [root@kmaster ~]# kubectl describe svc
 Name:                   hello-service
 Namespace:              default
@@ -69,9 +71,11 @@ Endpoints:              192.168.33.10:6443
 Session Affinity:       ClientIP
 No events.
 [root@kmaster ~]#
+```
 
 This always point to master. Since the other two ips 10.244.1.4, 10.244.1.3 are not resolvable.
 
+```
 [root@kmaster ~]# curl http://10.105.36.17
 Hello, "/"
 HOST: hello-deployment-1725651635-smtx8
@@ -81,7 +85,9 @@ ADDRESSES:
     ::1/128
     fe80::855:c3ff:fe3c:180c/64
 [root@kmaster ~]#
+```
 
+```
 [root@kmaster ~]# kubectl get pods -o wide
 NAME                                READY     STATUS    RESTARTS   AGE       IP              NODE
 busybox                             1/1       Running   0          36m       10.244.1.5      kslave
@@ -91,7 +97,7 @@ hello-deployment-1725651635-smtx8   1/1       Running   0          1h        10.
 kube-flannel-ds-bklmr               2/2       Running   0          1h        192.168.33.10   kmaster
 kube-flannel-ds-m0lbd               2/2       Running   2          1h        192.168.33.11   kslave
 [root@kmaster ~]#
-
+```
 
 
 
