@@ -88,16 +88,23 @@ ADDRESSES:
 ```
 
 ```
-[root@kmaster ~]# kubectl get pods -o wide
-NAME                                READY     STATUS    RESTARTS   AGE       IP              NODE
-busybox                             1/1       Running   0          36m       10.244.1.5      kslave
-hello-deployment-1725651635-1nnnx   1/1       Running   0          1h        10.244.1.4      kslave
-hello-deployment-1725651635-dh3r6   1/1       Running   0          1h        10.244.1.3      kslave
-hello-deployment-1725651635-smtx8   1/1       Running   0          1h        10.244.0.2      kmaster
-kube-flannel-ds-bklmr               2/2       Running   0          1h        192.168.33.10   kmaster
-kube-flannel-ds-m0lbd               2/2       Running   2          1h        192.168.33.11   kslave
+[root@kmaster ~]# kubectl get pods --all-namespaces -o wide
+NAMESPACE     NAME                                READY     STATUS    RESTARTS   AGE       IP              NODE
+default       busybox                             1/1       Running   1          1h        10.244.1.5      kslave
+default       hello-deployment-1725651635-1nnnx   1/1       Running   0          2h        10.244.1.4      kslave
+default       hello-deployment-1725651635-dh3r6   1/1       Running   0          2h        10.244.1.3      kslave
+default       hello-deployment-1725651635-smtx8   1/1       Running   0          2h        10.244.0.2      kmaster
+default       kube-flannel-ds-bklmr               2/2       Running   0          2h        192.168.33.10   kmaster
+default       kube-flannel-ds-m0lbd               2/2       Running   2          2h        192.168.33.11   kslave
+kube-system   dummy-2088944543-zrk8b              1/1       Running   0          2h        192.168.33.10   kmaster
+kube-system   etcd-kmaster                        1/1       Running   0          2h        192.168.33.10   kmaster
+kube-system   kube-apiserver-kmaster              1/1       Running   1          2h        192.168.33.10   kmaster
+kube-system   kube-controller-manager-kmaster     1/1       Running   0          2h        192.168.33.10   kmaster
+kube-system   kube-discovery-1769846148-f31cm     1/1       Running   0          2h        192.168.33.10   kmaster
+kube-system   kube-dns-2924299975-tnsj3           4/4       Running   0          2h        10.244.1.2      kslave
+kube-system   kube-proxy-hxrn3                    1/1       Running   0          2h        192.168.33.10   kmaster
+kube-system   kube-proxy-kvn81                    1/1       Running   0          2h        192.168.33.11   kslave
+kube-system   kube-scheduler-kmaster              1/1       Running   0          2h        192.168.33.10   kmaster
 [root@kmaster ~]#
 ```
-
-
 
