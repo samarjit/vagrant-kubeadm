@@ -28,10 +28,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ['modifyvm', :id, '--cableconnected1', 'on']
 
     end   
-    kmaster.vm.network "public_network", ip:  "192.168.33.10"
-    kmaster.vm.network "forwarded_port", guest: 80, host: 8888, auto_config: false
-    kmaster.vm.network "forwarded_port", guest: 8001, host: 8001, auto_config: false
-    kmaster.vm.network "forwarded_port", guest: 8080, host: 8080, auto_config: false
+    kmaster.vm.network "private_network", ip:  "192.168.33.10"
+    kmaster.vm.network "forwarded_port", guest: 80, host: 8888, auto_config: true
+    kmaster.vm.network "forwarded_port", guest: 8001, host: 8001, auto_config: true
+    kmaster.vm.network "forwarded_port", guest: 8080, host: 8080, auto_config: true
     kmaster.vm.hostname = "kmaster"
     
     kmaster.vm.provision :shell, :inline => "sed 's/127.0.0.1.*kmaster/192.168.33.10 kmaster/' -i /etc/hosts"

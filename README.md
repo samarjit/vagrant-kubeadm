@@ -3,8 +3,16 @@
 This will create 2 bento/centos-7.2 VMs kmaster and kslave.
 
 
-Vagrant version:
-Virtual Box Version:
+### Update
+Now it works with kubeadm 1.8.x
+Some previous hacks of /etc/kubernetes/manifests/kube-apiserver.json
+Adding ["--proxy-mode=userspace","--cluster-cidr=10.244.0.0/16"] to kube-proxy is not required.
+Previously one hack was missing for flannel --iface. It has been added now.
+
+### Prerequisites
+
+Vagrant version: Tested with 2.0.1 which is latest as of now
+Virtual Box Version: Tested with 5.2.0 which is latest as of now
 
 My version of vagrant and virtual box combination has some issue with networking. So right after boot up I need to fire `$systemctl restart network.service` on both kmaster and kslave.
 

@@ -1,0 +1,16 @@
+<div ng-controller="HomeController">
+    <h2>{{title}}</h2>
+    <div>{{body}}</div>
+	<div ng-bind="message" class="{{status}}" ></div>
+	Authenticated: {{authenticated}}
+	 
+		<div >
+            <input type="text" placeholder="Name" ng-model="name"> <br/>
+            <button type="button" ng-click="sayHello()">Say Hello</button>
+        </div>
+		
+		<br/>
+		<div>
+		<button type="button" ng-click="logout()">Logout</button> 
+	</div>
+</div>
