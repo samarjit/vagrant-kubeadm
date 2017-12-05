@@ -4,10 +4,12 @@ This will create 2 bento/centos-7.2 VMs kmaster and kslave.
 
 
 ### Update
-Now it works with kubeadm 1.8.x
-Some previous hacks of /etc/kubernetes/manifests/kube-apiserver.json
-Adding ["--proxy-mode=userspace","--cluster-cidr=10.244.0.0/16"] to kube-proxy is not required.
-Previously one hack was missing for flannel --iface. It has been added now.
+
+* Now it works with kubeadm 1.8.x
+* Some previous hacks of /etc/kubernetes/manifests/kube-apiserver.json
+* Adding ["--proxy-mode=userspace","--cluster-cidr=10.244.0.0/16"] to kube-proxy is not required.
+* Previously one hack was missing for flannel --iface. It has been added now.
+* Added option to set corporate proxy. Just replace all occurrences of 'corpproxy:8080' with your corporate proxy settings.
 
 ### Prerequisites
 
@@ -114,5 +116,28 @@ kube-system   kube-proxy-hxrn3                    1/1       Running   0         
 kube-system   kube-proxy-kvn81                    1/1       Running   0          2h        192.168.33.11   kslave
 kube-system   kube-scheduler-kmaster              1/1       Running   0          2h        192.168.33.10   kmaster
 [root@kmaster ~]#
+```
+
+
+
+### Create your own docker image and run in k8s cluster
+```
+[root@kmaster ~]# cd /vagrant/fe
+[root@kmaster fe]# docker build -t fe:1.0 .
+[root@kmaster fe]# docker run -d -p 80:80 fe:1.0
+[root@kmaster fe]# docker ps
+```
+
+Check that container is up and listening on port 80. `netstat -nlp|grep 80`.
+
+```
+[root@kmaster fe]# docker stop <container id that you got in the previous docker ps step>
+```
+
+```
+[root@kmaster fe]# kubectl apply -f front.yml
+[root@kmaster fe]# kubectl get pod -owide
+[root@kmaster fe]# kubectl get svc
+[root@kmaster fe]# curl 192.168.33.10/ui/src/            --- Should return the index.html
 ```
 
