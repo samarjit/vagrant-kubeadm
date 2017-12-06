@@ -197,4 +197,14 @@ Now log into kslave node, and load the exported tar image
 [root@kmaster fe]# curl 192.168.33.10/ui/src/            --- Should return the index.html
 ```
 
+You can open the deployed application in browser url: http://192.168.33.10/ui/src/
 
+
+### Some exercises for you 
+* Create a microservice with service name as `back-svc`
+* Reverse proxy url is present in deployed `fe` to `back-svc`
+* You can even scale the backend microservice by extracting session into a separate DB eg. Redis.
+* Install redis using `yum install redis`.
+* Update redis binding address in /etc/redis.conf  to `bind 192.168.33.10` by editing. Then enable redis `systemctl start redis && systemctl enable redis`. 
+* Update microservice to use redis for storing sessions.
+* Use dashboard to create more replicas of backend microservice
