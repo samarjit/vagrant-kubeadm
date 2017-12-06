@@ -34,6 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     kmaster.vm.network "forwarded_port", guest: 8080, host: 8080, auto_config: true
     kmaster.vm.hostname = "kmaster"
     
+	kmaster.vm.provision :shell, :inline => "export https_proxy=http://corpproxy:8080 && export http_proxy=http://corpproxy:8080 && export no_proxy=kmaster,kslave,localhost,127.0.0.1,192.168.33.10,192.168.33.12,192.168.33.11/16,10.0.2.0/16,172.17.0.0/16,10.96.0.0/16,10.244.0.0/16"
     kmaster.vm.provision :shell, :inline => "sed 's/127.0.0.1.*kmaster/192.168.33.10 kmaster/' -i /etc/hosts"
     kmaster.vm.provision :shell, :inline => "setenforce 0"
     kmaster.vm.provision :shell, :inline => "sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/selinux"
@@ -57,10 +58,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     kslave.vm.network "forwarded_port", guest: 8080, host: 8081, auto_config: false
     kslave.vm.hostname = "kslave"
 
+	kslave.vm.provision :shell, :inline => "export https_proxy=http://corpproxy:8080 && export http_proxy=http://corpproxy:8080 && export no_proxy=kmaster,kslave,localhost,127.0.0.1,192.168.33.10,192.168.33.12,192.168.33.11/16,10.0.2.0/16,172.17.0.0/16,10.96.0.0/16,10.244.0.0/16"
     kslave.vm.provision :shell, :inline => "sed 's/127.0.0.1.*kslave/192.168.33.11 kslave/' -i /etc/hosts"
     kslave.vm.provision :shell, :inline => "setenforce 0"
     kslave.vm.provision :shell, :inline => "sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/selinux"
     kslave.vm.provision :shell, path: "install.sh"
+	kslave.vm.provision :shell, path: "join.sh"
   end
  
   # config.vm.define "javaingest" do |javaingest|
