@@ -1,0 +1,1 @@
+kubeadm join --token 7baee4.d576223cb4884c9b 192.168.33.10:6443

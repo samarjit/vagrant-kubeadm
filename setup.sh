@@ -1,4 +1,6 @@
-export http_proxy=http://corpproxy:8080  && export no_proxy=kmaster,kslave2,kslave,localhost,127.0.0.1,192.168.33.10,192.168.33.12,192.168.33.11,10.0.2.0/16,172.17.0.0/16,10.96.0.0/16,10.244.0.0/16
+export HTTPS_PROXY=http://one.proxy.att.com:8080 && export HTTP_PROXY=http://one.proxy.att.com:8080 && export https_proxy=http://one.proxy.att.com:8080 && export http_proxy=http://one.proxy.att.com:8080 && export no_proxy=kmaster,kslave2,kslave,localhost,127.0.0.1,192.168.33.10,192.168.33.12,192.168.33.11,10.0.2.0/16,172.17.0.0/16,10.96.0.0/16,10.244.0.0/16
+
+
 
 kubeadm init --apiserver-advertise-address=192.168.33.10 --token=7baee4.d576223cb4884c9b --pod-network-cidr="10.244.0.0/16"
 
@@ -8,6 +10,9 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 ## --iface added
 kubectl apply -f /vagrant/kube-flannel.yml
+
+##EXpose NodePorts in master
+kubectl taint nodes --all node-role.kubernetes.io/master-
 
 # jq \
 #    '.spec.containers[0].command |= .+ ["--advertise-address=192.168.33.10"]' \

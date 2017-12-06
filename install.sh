@@ -30,13 +30,13 @@ yum install -y jq
 yum install bind-utils -y
 yum install -y tcpdump
 
-mkdir /etc/systemd/system/kubelet.service.d/
+mkdir -p /etc/systemd/system/kubelet.service.d/
 cat <<EOF  > /etc/systemd/system/kubelet.service.d/90-local-extras.conf
 [Service]
 Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"
 EOF
 
-mkdir /etc/systemd/system/docker.service.d/
+mkdir -p /etc/systemd/system/docker.service.d/
 cat <<EOF > /etc/systemd/system/docker.service.d/http-proxy.conf
 [Service]
 Environment="HTTP_PROXY=http://corpproxy:8080"
@@ -47,3 +47,5 @@ systemctl daemon-reload
 
 systemctl enable docker && systemctl start docker && systemctl status docker
 systemctl enable kubelet && systemctl start kubelet && systemctl status kubelet
+
+swapoff -a
